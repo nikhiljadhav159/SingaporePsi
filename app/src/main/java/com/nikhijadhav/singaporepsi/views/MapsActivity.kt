@@ -1,6 +1,7 @@
 package com.nikhijadhav.singaporepsi.views
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -35,9 +36,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
         mapViewModel.callForPsiData()
         mapViewModel.lastUpdatedTimeStamp.observe(this, Observer {
+            it.updateTimestamp = "Last Updated ${it.updateTimestamp}"
             activityMapsBinding.time = it
             activityMapsBinding.executePendingBindings()
         })
+
+        mapViewModel.noInternetError.observe(
+            this,
+            Observer {
+                if (it) {
+                    Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show()
+                }else{
+                    Toast.makeText(this, "Something Went Wrong..", Toast.LENGTH_SHORT).show()
+
+                }
+
+            })
     }
 
     /**

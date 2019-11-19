@@ -12,7 +12,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.net.UnknownHostException
 
-class MapViewModel : ViewModel() {
+open class MapViewModel : ViewModel() {
 
     val TAG = MapViewModel::class.java.simpleName
     var regionList = MutableLiveData<ArrayList<RegionMetadatum>>()
@@ -25,33 +25,39 @@ class MapViewModel : ViewModel() {
         val callback = object : Callback<PsiApiResponse> {
 
             override fun onResponse(call: Call<PsiApiResponse>?, response: Response<PsiApiResponse>?) {
-                val informationResponse = response!!.body()!!
-                lastUpdatedTimeStamp.value = informationResponse.items!![0]
-                val regionMetadataList = informationResponse.regionMetadata as ArrayList<RegionMetadatum>
+                try {
+                    val informationResponse = response!!.body()!!
+                    lastUpdatedTimeStamp.value = informationResponse.items!![0]
+                    val regionMetadataList = informationResponse.regionMetadata as ArrayList<RegionMetadatum>
 
-                regionMetadataList.forEach {
-                    when (it.name) {
-                        "north" -> {
-                            it.readings = informationResponse.items!![0].readings!!.getReadingsDataFor("north")
+                    regionMetadataList.forEach {
+                        when (it.name) {
+                            "north" -> {
+                                it.readings = informationResponse.items!![0].readings!!.getReadingsDataFor("north")
+                            }
+                            "south" -> {
+                                it.readings = informationResponse.items!![0].readings!!.getReadingsDataFor("south")
+                            }
+                            "central" -> {
+                                it.readings = informationResponse.items!![0].readings!!.getReadingsDataFor("central")
+                            }
+                            "east" -> {
+                                it.readings = informationResponse.items!![0].readings!!.getReadingsDataFor("east")
+                            }
+                            "west" -> {
+                                it.readings = informationResponse.items!![0].readings!!.getReadingsDataFor("west")
+                            }
                         }
-                        "south" -> {
-                            it.readings = informationResponse.items!![0].readings!!.getReadingsDataFor("south")
-                        }
-                        "central" -> {
-                            it.readings = informationResponse.items!![0].readings!!.getReadingsDataFor("central")
-                        }
-                        "east" -> {
-                            it.readings = informationResponse.items!![0].readings!!.getReadingsDataFor("east")
-                        }
-                        "west" -> {
-                            it.readings = informationResponse.items!![0].readings!!.getReadingsDataFor("west")
-                        }
+
                     }
 
+                    regionList.value = regionMetadataList
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    noInternetError.value = true
                 }
-
-                regionList.value = regionMetadataList
             }
+
 
             override fun onFailure(call: Call<PsiApiResponse>?, t: Throwable?) {
                 Log.e(TAG, t.toString())
@@ -61,6 +67,7 @@ class MapViewModel : ViewModel() {
                     noInternetError.postValue(false)
                 }
             }
+
         }
         //endregion
 

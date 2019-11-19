@@ -27,6 +27,11 @@ android {
         enabled = true
     }
 
+    //Testing modules
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
 }
 
 dependencies {
@@ -35,6 +40,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.1.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
@@ -46,4 +52,11 @@ dependencies {
     kapt 'androidx.lifecycle:lifecycle-compiler:2.1.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-savedstate:1.0.0-alpha01'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+
+    testImplementation 'org.mockito:mockito-core:2.23.0'
+    testImplementation 'org.mockito:mockito-inline:2.13.0'
+    testImplementation("com.squareup.okhttp3:okhttp:4.2.2")
+
+    testImplementation 'androidx.arch.core:core-testing:2.1.0'
+
 }
