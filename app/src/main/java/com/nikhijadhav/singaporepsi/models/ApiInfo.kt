@@ -1,5 +1,7 @@
 package com.nikhijadhav.singaporepsi.models
 
-data class ApiInfo(val status: String? = null) {
+import com.google.gson.annotations.SerializedName
+
+data class ApiInfo(@SerializedName("status") var status: String?) {
 
 }

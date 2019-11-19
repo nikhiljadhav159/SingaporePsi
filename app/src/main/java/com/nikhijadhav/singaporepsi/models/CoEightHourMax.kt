@@ -1,11 +1,19 @@
 package com.nikhijadhav.singaporepsi.models
 
+import com.google.gson.annotations.SerializedName
+
 data class CoEightHourMax(
-    private val west: Double? = null,
-    private val national: Double? = null,
-    private val east: Double? = null,
-    private val central: Double? = null,
-    private val south: Double? = null,
-    private val north: Double? = null
+     @SerializedName("west")
+     var west: Double?,
+     @SerializedName("national")
+     var national: Double? ,
+     @SerializedName("east")
+     var east: Double? ,
+     @SerializedName("central")
+     var central: Double? ,
+     @SerializedName("south")
+     var south: Double? ,
+     @SerializedName("north")
+     var north: Double?
 ) {
 }

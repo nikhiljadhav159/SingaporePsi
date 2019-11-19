@@ -1,7 +1,11 @@
 package com.nikhijadhav.singaporepsi.models
 
+import com.google.gson.annotations.SerializedName
+
 data class LabelLocation(
-    private val latitude: Double? = null,
-    private val longitude: Double? = null
+     @SerializedName("latitude")
+     var latitude: Double? ,
+     @SerializedName("longitude")
+     var longitude: Double?
 ) {
 }
